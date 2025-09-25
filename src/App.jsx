@@ -1,79 +1,75 @@
-import { useState, useEffect } from 'react';
-import SearchBar from './components/SearchBar';
-import CurrentWeather from './components/CurrentWeather';
-import WeatherStats from './components/WeatherStats';
+import { useState } from 'react';
+import { getCurrentWeather, getForecast } from './api/weather';
+import WeatherCard from './components/WeatherCard';
 import Forecast from './components/Forecast';
 import LoadingSpinner from './components/LoadingSpinner';
-import ErrorMessage from './components/ErrorMessage';
-import { fetchWeatherData, fetchForecastData } from './services/weatherApi';
 
-function App() {
-    const [weatherData, setWeatherData] = useState(null);
-    const [forecastData, setForecastData] = useState(null);
+export default function App() {
+    const [city, setCity] = useState('');
+    const [weather, setWeather] = useState(null);
+    const [forecast, setForecast] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
 
-    const handleSearch = async (city) => {
-        if (!city.trim()) return;
-
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (!city) return;
         setLoading(true);
-        setError(null);
-
+        setError('');
         try {
-            const [currentWeather, forecast] = await Promise.all([
-                fetchWeatherData(city),
-                fetchForecastData(city),
-            ]);
-
-            setWeatherData(currentWeather);
-            setForecastData(forecast);
+            const data = await getCurrentWeather(city);
+            const forecastData = await getForecast(city);
+            setWeather(data);
+            setForecast(forecastData);
+            setCity('');
         } catch (err) {
-            setError(err.message || 'Failed to fetch weather data');
-            setWeatherData(null);
-            setForecastData(null);
+            setError('City not found');
+            setWeather(null);
+            setForecast(null);
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        handleSearch('Berlin');
-    }, []);
-
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-            <div className="container mx-auto px-4 py-6">
-                {/* Header */}
-                <header className="text-center mb-8">
-                    <h1 className="text-2xl font-light mb-2">Weather Now</h1>
-                    <p className="text-gray-400 text-sm">
-                        How's the sky looking today?
-                    </p>
-                </header>
+        <div className="w-full max-w-5xl p-6">
+            <h1 className="text-2xl text-center mb-6 font-semibold">
+                How’s the sky looking today?
+            </h1>
 
-                <SearchBar onSearch={handleSearch} />
+            {/* Search Bar */}
+            <form onSubmit={handleSearch} className="flex justify-center mb-6">
+                <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="Search for a place..."
+                    className="p-2 rounded-l-md w-64 text-black border-amber-300"
+                />
+                <button
+                    type="submit"
+                    className="bg-blue-600 px-4 py-2 rounded-r-md hover:bg-blue-700"
+                >
+                    Search
+                </button>
+            </form>
 
-                {loading && <LoadingSpinner />}
-                {error && <ErrorMessage message={error} />}
+            {/* States */}
+            {loading && <LoadingSpinner />}
+            {error && <p className="text-center text-red-400">{error}</p>}
+            {!weather && !loading && !error && (
+                <p className="text-center">
+                    Search for a city to see weather info
+                </p>
+            )}
 
-                {!loading && !error && weatherData && (
-                    <div className="max-w-4xl mx-auto">
-                        <CurrentWeather data={weatherData} />
-                        <WeatherStats data={weatherData} />
-                        <Forecast data={forecastData} />
-                    </div>
-                )}
-
-                {!loading && !error && !weatherData && (
-                    <div className="text-center py-12">
-                        <p className="text-gray-400">
-                            Search for a city to see weather information
-                        </p>
-                    </div>
-                )}
-            </div>
+            {/* Weather Data */}
+            {weather && forecast && (
+                <div className="space-y-6">
+                    <WeatherCard weather={weather} />
+                    <Forecast forecast={forecast} />
+                </div>
+            )}
         </div>
     );
 }
-
-export default App;

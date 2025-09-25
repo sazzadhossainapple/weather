@@ -1,0 +1,2 @@
+VITE_API_KEY_URL=https://api.openweathermap.org/data/2.5/
+VITE_API_KEY_WEATHER='9d729cfd40c256defac28e6a8266b774'
