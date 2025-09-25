@@ -38,6 +38,4 @@ This app is configured for easy deployment on Vercel:
 
 The app uses OpenWeatherMap API with a pre-configured API key. For production use, consider using environment variables for the API key.
 
-## License
 
-MIT License
