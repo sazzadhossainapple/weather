@@ -11,6 +11,7 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    // search city function
     const handleSearch = async (e) => {
         e.preventDefault();
         if (!city) return;
@@ -44,7 +45,7 @@ export default function App() {
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     placeholder="Search for a place..."
-                    className="p-2 rounded-l-md w-64 text-black border-amber-300"
+                    className="p-2 rounded-l-md w-64 text-white border-white border-2"
                 />
                 <button
                     type="submit"

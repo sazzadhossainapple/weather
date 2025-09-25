@@ -10,6 +10,8 @@ export default function Forecast({ forecast }) {
 
     const days = Object.entries(daily).slice(0, 7);
 
+ 
+
     return (
         <div className="grid md:grid-cols-2 gap-6">
             {/* Daily Forecast */}
