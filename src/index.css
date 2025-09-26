@@ -1,19 +1,46 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
-    @apply bg-gradient-to-br from-purple-900 to-indigo-900 text-white min-h-screen flex items-center justify-center;
+    font-family: 'Roboto', sans-serif;
+    @apply bg-gradient-to-br from-purple-800 via-purple-900 to-indigo-950 text-white min-h-screen flex items-center justify-center;
+}
+.w-container {
+    width: 1200px;
+    padding: 2.5rem;
+}
+.flex-left {
+    width: 70%;
+}
+.flex-right {
+    width: 30%;
+}
+
+@media only screen and (min-width: 250px) and (max-width: 575px) {
+    .w-container {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .w-container {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .w-container {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .w-container {
+        width: 100%;
+        padding: 1rem;
+    }
 }

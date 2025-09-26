@@ -3,6 +3,9 @@ import { getCurrentWeather, getForecast } from './api/weather';
 import WeatherCard from './components/WeatherCard';
 import Forecast from './components/Forecast';
 import LoadingSpinner from './components/LoadingSpinner';
+import image from './asset/iocn/Frame.svg';
+import searchIcon from './asset/iocn/searchIcon.svg';
+import HourlyForecast from './components/HourlyForecast';
 
 export default function App() {
     const [city, setCity] = useState('');
@@ -33,23 +36,50 @@ export default function App() {
     };
 
     return (
-        <div className="w-full max-w-5xl p-6">
-            <h1 className="text-2xl text-center mb-6 font-semibold">
+        <div className="w-container flex flex-col items-center justify-center text-white">
+            <div className="flex justify-between items-center w-full mb-10">
+                {/* Logo */}
+                <div className="flex items-center gap-2">
+                    <span className="text-yellow-400 text-2xl">☀️</span>
+                    <h2 className="font-semibold text-lg">Weather Today</h2>
+                </div>
+
+                {/* Unit Dropdown (top-right) */}
+                <div className="">
+                    <button className="px-3 py-1 bg-black/40 rounded-md text-sm">
+                        ⚙️ Units ▼
+                    </button>
+                </div>
+            </div>
+
+            {/* Main Title */}
+            <h1 className="text-xl sm:text-2xl text-center mb-6 font-normal">
                 How’s the sky looking today?
             </h1>
 
             {/* Search Bar */}
-            <form onSubmit={handleSearch} className="flex justify-center mb-6">
-                <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="Search for a place..."
-                    className="p-2 rounded-l-md w-64 text-white border-white border-2"
-                />
+            <form
+                onSubmit={handleSearch}
+                className="flex gap-2 w-full max-w-xl mb-6"
+            >
+                <div className="relative w-full">
+                    <img
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4"
+                        src={searchIcon}
+                        alt=""
+                    />
+                    <input
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        placeholder="Search for a place..."
+                        className="w-full flex-grow pl-9 pr-4 py-1 rounded-md bg-[#1F293780] border-[#4B5563B2] focus:outline-none text-white placeholder-[#757575]"
+                    />
+                </div>
+
                 <button
                     type="submit"
-                    className="bg-blue-600 px-4 py-2 rounded-r-md hover:bg-blue-700"
+                    className="bg-blue-600 px-5 py-1 rounded-md hover:bg-blue-700 transition"
                 >
                     Search
                 </button>
@@ -59,16 +89,23 @@ export default function App() {
             {loading && <LoadingSpinner />}
             {error && <p className="text-center text-red-400">{error}</p>}
             {!weather && !loading && !error && (
-                <p className="text-center">
-                    Search for a city to see weather info
-                </p>
+                <div className="flex flex-col items-center mt-8 text-gray-300">
+                    <img src={image} alt="image" className="w-32 h-32" />
+                    <p className="text-[#9CA3AF] font-normal mt-2">
+                        Search for a city to see weather information
+                    </p>
+                </div>
             )}
 
             {/* Weather Data */}
             {weather && forecast && (
-                <div className="space-y-6">
-                    <WeatherCard weather={weather} />
-                    <Forecast forecast={forecast} />
+                <div className="w-full flex flex-col md:flex-row gap-6">
+                    <div className="flex-left">
+                        <WeatherCard weather={weather} forecast={forecast} />
+                    </div>
+                    <div className="flex-right">
+                        <HourlyForecast forecast={forecast} />
+                    </div>
                 </div>
             )}
         </div>
