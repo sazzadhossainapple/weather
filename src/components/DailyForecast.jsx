@@ -13,7 +13,7 @@ const DailyForecast = ({ forecast }) => {
     return (
         <div>
             <h3 className="text-lg font-semibold mb-4">Daily forecast</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3">
                 {days.map(([day, items]) => {
                     const temps = items.map((i) => i.main.temp);
                     const min = Math.round(Math.min(...temps));

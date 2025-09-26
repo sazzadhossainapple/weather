@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { getCurrentWeather, getForecast } from './api/weather';
 import WeatherCard from './components/WeatherCard';
-import Forecast from './components/Forecast';
 import LoadingSpinner from './components/LoadingSpinner';
 import image from './asset/iocn/Frame.svg';
 import searchIcon from './asset/iocn/searchIcon.svg';
@@ -73,13 +72,13 @@ export default function App() {
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         placeholder="Search for a place..."
-                        className="w-full flex-grow pl-9 pr-4 py-1 rounded-md bg-[#1F293780] border-[#4B5563B2] focus:outline-none text-white placeholder-[#757575]"
+                        className="w-full flex-grow pl-9 pr-4 py-2 rounded-md bg-[#1F293780] border-[#4B5563B2] focus:outline-none text-white placeholder-[#757575]"
                     />
                 </div>
 
                 <button
                     type="submit"
-                    className="bg-blue-600 px-5 py-1 rounded-md hover:bg-blue-700 transition"
+                    className="bg-blue-600 px-5 py-2 rounded-md hover:bg-blue-700 transition cursor-pointer"
                 >
                     Search
                 </button>
@@ -87,7 +86,13 @@ export default function App() {
 
             {/* States */}
             {loading && <LoadingSpinner />}
-            {error && <p className="text-center text-red-400">{error}</p>}
+            {error && (
+                <div className="w-full max-w-xl mb-4">
+                    <p className="text-center text-red-500 bg-red-100 border border-red-400 rounded-md px-4 py-2">
+                        {error} ❌
+                    </p>
+                </div>
+            )}
             {!weather && !loading && !error && (
                 <div className="flex flex-col items-center mt-8 text-gray-300">
                     <img src={image} alt="image" className="w-32 h-32" />
@@ -99,7 +104,7 @@ export default function App() {
 
             {/* Weather Data */}
             {weather && forecast && (
-                <div className="w-full flex flex-col md:flex-row gap-6">
+                <div className="w-full flex flex-col lg:flex-row gap-6">
                     <div className="flex-left">
                         <WeatherCard weather={weather} forecast={forecast} />
                     </div>

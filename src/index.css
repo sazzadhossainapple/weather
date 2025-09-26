@@ -1,16 +1,21 @@
 @import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* 2. Root variables */
 :root {
     font-family: 'Roboto', sans-serif;
 }
 
+/* 3. Global styles */
 body {
     font-family: 'Roboto', sans-serif;
     @apply bg-gradient-to-br from-purple-800 via-purple-900 to-indigo-950 text-white min-h-screen flex items-center justify-center;
 }
+
+/* 4. Container & layout */
 .w-container {
     width: 1200px;
-    padding: 2.5rem;
+    margin: 2.5rem;
 }
 .flex-left {
     width: 70%;
@@ -19,28 +24,47 @@ body {
     width: 30%;
 }
 
-@media only screen and (min-width: 250px) and (max-width: 575px) {
+/* 5. Responsive */
+@media only screen and (max-width: 575px) {
     .w-container {
         width: 100%;
-        padding: 1rem;
+        margin: 3rem 0;
+    }
+    .flex-left,
+    .flex-right {
+        width: 100%;
     }
 }
+
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .w-container {
         width: 100%;
-        padding: 1rem;
+        margin: 3rem 0;
+    }
+    .flex-left,
+    .flex-right {
+        width: 100%;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .w-container {
         width: 100%;
-        padding: 1rem;
+        margin: 2rem 0;
+    }
+    .flex-left,
+    .flex-right {
+        width: 100%;
     }
 }
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .w-container {
         width: 100%;
-        padding: 1rem;
+        margin: 2rem 0;
+    }
+    .flex-left,
+    .flex-right {
+        width: 100%;
     }
 }

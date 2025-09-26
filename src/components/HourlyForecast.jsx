@@ -15,23 +15,26 @@ const HourlyForecast = ({ forecast }) => {
                     {forecast.list.slice(0, 8).map((item) => (
                         <div
                             key={item.dt}
-                            className="flex justify-between bg-purple-900/40 p-2 rounded-md"
+                            className="flex justify-between border-b border-[#4B55634D] px-2 py-2 last:border-b-0"
                         >
-                            <span>
-                                {new Date(item.dt_txt).toLocaleTimeString(
-                                    'en-US',
-                                    {
-                                        hour: 'numeric',
-                                        hour12: true,
-                                    }
-                                )}
-                            </span>
                             <div className="flex items-center gap-2">
                                 <img
                                     src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
                                     alt="icon"
                                     className="w-6 h-6"
                                 />
+                                <span className="text-sm font-normal">
+                                    {new Date(item.dt_txt).toLocaleTimeString(
+                                        'en-US',
+                                        {
+                                            hour: 'numeric',
+                                            hour12: true,
+                                        }
+                                    )}
+                                </span>
+                            </div>
+
+                            <div>
                                 <span>{Math.round(item.main.temp)}°</span>
                             </div>
                         </div>
